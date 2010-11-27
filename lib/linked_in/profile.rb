@@ -13,6 +13,10 @@ module LinkedIn
         @doc.xpath("./person/#{f.gsub(/_/,'-')}").text
       end
     end
+    
+    def name
+      [self.first_name, self.last_name].compact.join(' ')
+    end
 
     def location
       @location ||= Location.new(@doc)
