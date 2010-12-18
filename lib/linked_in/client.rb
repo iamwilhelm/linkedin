@@ -119,8 +119,13 @@ module LinkedIn
     end
 
     def search(options={})
-      path = "/people"
+      path = "/people-search"
       options = {:keywords => options} if options.is_a?(String)
+      
+      unless options[:fields].nil?
+        path +=":(people:(#{options.delete(:fields).map{|f| f.to_s.gsub("_","-")}.join(',')}))"
+      end
+      
       options = format_options_for_query(options)
 
       People.from_xml(get(to_uri(path, options)))

@@ -108,7 +108,7 @@ class ClientTest < Test::Unit::TestCase
     end
 
     should "perform a search by keyword" do
-      stub_get("/v1/people?keywords=github", "search.xml")
+      stub_get("/v1/people-search?keywords=github", "search.xml")
       results = @linkedin.search(:keywords => 'github')
       results.start.should == 0
       results.count.should == 10
@@ -117,7 +117,7 @@ class ClientTest < Test::Unit::TestCase
     end
 
     should "perform a search by multiple keywords" do
-      stub_get("/v1/people?keywords=ruby+rails", "search.xml")
+      stub_get("/v1/people-search?keywords=ruby+rails", "search.xml")
       results = @linkedin.search(:keywords => ["ruby", "rails"])
       results.start.should == 0
       results.count.should == 10
@@ -126,7 +126,7 @@ class ClientTest < Test::Unit::TestCase
     end
 
     should "perform a search by name" do
-      stub_get("/v1/people?name=Zach+Inglis", "search.xml")
+      stub_get("/v1/people-search?name=Zach+Inglis", "search.xml")
       results = @linkedin.search(:name => "Zach Inglis")
       results.start.should == 0
       results.count.should == 10
