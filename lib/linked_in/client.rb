@@ -131,6 +131,22 @@ module LinkedIn
       People.from_xml(get(to_uri(path, options)))
     end
 
+    def email_search(options={})
+      path = "/people"
+      options = {:email => options} if options.is_a?(String)
+
+      path += "/email=#{options.delete(:email)}"
+      
+      unless options[:fields].nil?
+        path +=":(#{options.delete(:fields).map{|f| f.to_s.gsub("_","-")}.join(',')})"
+      end
+
+      options = format_options_for_query(options)
+
+      puts "uri: #{to_uri(path, options)}"
+      People.from_xml(get(to_uri(path, options)))
+    end
+    
     def current_status
       path = "/people/~/current-status"
       Crack::XML.parse(get(path))['current_status']
