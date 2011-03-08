@@ -143,7 +143,6 @@ module LinkedIn
 
       options = format_options_for_query(options)
 
-      puts "uri: #{to_uri(path, options)}"
       Profile.from_xml(get(to_uri(path, options)))
     end
     
