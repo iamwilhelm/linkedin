@@ -7,15 +7,18 @@ module LinkedIn
       end
     end
 
-    def profiles
+    def profiles(xpath = "people")
       @array ||= begin
         @array = []
-        @doc.xpath('//people').children.each do |profile|
+        @doc.xpath("//#{xpath}").children.each do |profile|
           @array << Profile.new(Nokogiri::XML(profile.to_xml)) unless profile.blank?
         end
         @array
       end
     end
 
+    def related_connections
+      profiles("related-connections")
+    end
   end
 end

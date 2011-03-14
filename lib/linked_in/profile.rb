@@ -42,6 +42,11 @@ module LinkedIn
       @doc.xpath('//relation-to-viewer/num-related-connections').text
     end
 
+    def related_connections
+      @related_connections ||=
+        People.new(@doc.xpath('//relation-to-viewer/related-connections')).related_connections
+    end
+    
     def member_url_resources
       @url_resources ||= UrlResource.new(@doc.xpath('//member-url-resources')).resources
     end
