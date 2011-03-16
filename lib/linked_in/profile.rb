@@ -67,5 +67,12 @@ module LinkedIn
       @groups ||= Group.new(@doc.xpath('//member-groups')).groups
     end
 
+    def twitter_accounts(options={})
+      @doc.xpath('//twitter-accounts/twitter-account').map do |ta|
+        { :provider_account_id => ta.xpath('//provider-account-id').text,
+          :provider_account_name => ta.xpath('//provider-account-name').text }
+      end
+    end
+
   end
 end
