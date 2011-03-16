@@ -3,7 +3,6 @@ module LinkedIn
 
     # TODO: @ http://developer.linkedin.com/docs/DOC-1061 && / DOC-1014
     # add in client.get("/people/~:(im-accounts)")
-    #        client.get("/people/~:(twitter-accounts)")
     #        client.get("/people/~:(date-of-birth)")
     #        client.get("/people/~:(main-address)")
     attr_reader :ctoken, :csecret, :consumer_options
@@ -193,6 +192,16 @@ module LinkedIn
     def network_updates(options={})
       path = "/people/~/network"
       Network.from_xml(get(to_uri(path, options)))
+    end
+
+    # client.get("/people/~:(twitter-accounts)")
+    def twitter_accounts(options={})
+      path = "/people/~:(twitter-accounts)"
+      xml = Nokogiri::XML(get(to_uri(path, options)))
+      xml.xpath('//twitter-accounts/twitter-account').map do |ta|
+        { :provider_account_id => ta.xpath('//provider-account-id').text,
+          :provider_account_name => ta.xpath('//provider-account-name').text }
+      end
     end
 
     # helpful in making authenticated calls and writing the
